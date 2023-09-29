@@ -18,14 +18,12 @@ namespace TravelAPI.Controllers
             
         }
 
-        // GET: api/<UserController>
         [HttpGet]
         public ActionResult<List<User>> Get()
         {
             return userService.Get();
         }
 
-        // GET api/<UserController>/5
         [HttpGet("{nic}")]
         public ActionResult<User> Get(string nic)
         {
@@ -40,31 +38,30 @@ namespace TravelAPI.Controllers
             return user;
         }
 
-        // POST api/<UserController>
+        
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            userService.Create(user);
+            var result = userService.Create(user);
 
-            return CreatedAtAction(nameof(Get),new {nic = user.Nic}, user);
+            return result;
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] User user)
+        
+        [HttpPut("{nic}")]
+        public ActionResult Put(string nic, [FromBody] User user)
         {
-            var existingUser = userService.Get(id);
+            var existingUser = userService.Get(nic);
 
             if(existingUser == null)
             {
-                return NotFound($"User with Id = {id} not found");
+                return NotFound($"User with nic = {nic} not found");
             }
 
-            userService.Update(id, user);
-            return NoContent();
+            userService.Update(nic, user);
+            return Ok("Updated");
         }
 
-        // DELETE api/<UserController>/5
         [HttpDelete("{nic}")]
         public ActionResult Delete(string nic)
         {
@@ -92,8 +89,15 @@ namespace TravelAPI.Controllers
 
             bool isPasswordVerified = userService.VerifyLogin(loginRequest.Nic, loginRequest.Password);
 
-            Console.WriteLine($"isPasswordVerify {isPasswordVerified}");
-            return user;
+            if (isPasswordVerified)
+            {
+                return user;
+            }
+            else
+            {
+                return Unauthorized("Invalid NIC or password");
+
+            }
         }
     }
 }

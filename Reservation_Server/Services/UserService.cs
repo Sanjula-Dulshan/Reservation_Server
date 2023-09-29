@@ -17,6 +17,12 @@ namespace TravelAPI.Services
         }
         public User Create(User user)
         {
+            var existingUser = _users.Find(u => u.Nic == user.Nic).FirstOrDefault();
+            if (existingUser != null)
+            {
+                return null;
+            }
+
             user.Password = HashPassword(user.Password);
             _users.InsertOne(user);
             return user;
