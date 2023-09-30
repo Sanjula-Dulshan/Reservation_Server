@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Reservation_Server.Database;
+using Reservation_Server.Services.Reservations;
 using Reservation_Server.Services.TrainService;
 using Reservation_Server.Services.Users;
 
@@ -19,6 +20,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITrainService, TrainService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 
 
 builder.Services.AddControllers();

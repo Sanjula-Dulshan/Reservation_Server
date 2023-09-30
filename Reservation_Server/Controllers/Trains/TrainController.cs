@@ -75,7 +75,7 @@ namespace Reservation_Server.Controllers.TrainController
                 return NotFound($"Train with id = {id} not found ");
             }
 
-            trainService.Remove(trainToDelete.Id);
+            trainService.Delete(trainToDelete.Id);
 
             return Ok($"Train with Id = {id} deleted");
         }

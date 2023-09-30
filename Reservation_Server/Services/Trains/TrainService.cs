@@ -31,7 +31,7 @@ namespace Reservation_Server.Services.TrainService
             return _trains.Find(train => train.Id == id).FirstOrDefault();
         }
 
-        public void Remove(string id)
+        public void Delete(string id)
         {
             _trains.DeleteOne(train => train.Id == id);
         }

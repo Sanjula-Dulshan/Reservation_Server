@@ -8,15 +8,15 @@ namespace Reservation_Server.Services.Users
 {
     public class UserService : IUserService
     {
-        private readonly IMongoCollection<User> _users;
+        private readonly IMongoCollection<Models.Users.Route> _users;
 
         public UserService(IDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
-            _users = database.GetCollection<User>(settings.UserCollectionName);
+            _users = database.GetCollection<Models.Users.Route>(settings.UsersCollectionName);
 
         }
-        public string Create(User user)
+        public string Create(Models.Users.Route user)
         {
             var existingUser = _users.Find(u => u.Nic == user.Nic).FirstOrDefault();
             if (existingUser != null)
@@ -35,17 +35,17 @@ namespace Reservation_Server.Services.Users
             _users.DeleteOne(user => user.Nic == nic);
         }
 
-        public List<User> Get()
+        public List<Models.Users.Route> Get()
         {
             return _users.Find(user => true).ToList();
         }
 
-        public User Get(string id)
+        public Models.Users.Route Get(string id)
         {
             return _users.Find(user => user.Nic == id).FirstOrDefault();
         }
 
-        public void Update(string id, User user)
+        public void Update(string id, Models.Users.Route user)
         {
             user.Password = HashPassword(user.Password);
 
@@ -56,7 +56,7 @@ namespace Reservation_Server.Services.Users
         {
             var user = _users.Find(user => user.Nic == nic).FirstOrDefault();
             var status = !user.IsActive;
-            _users.UpdateOne(user => user.Nic == nic, Builders<User>.Update.Set("IsActive", status));
+            _users.UpdateOne(user => user.Nic == nic, Builders<Models.Users.Route>.Update.Set("IsActive", status));
 
             if (status)
             {
@@ -102,6 +102,7 @@ namespace Reservation_Server.Services.Users
 
             if (isVerified)
             {
+
                 return "true";
             }
             else

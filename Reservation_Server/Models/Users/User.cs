@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Reservation_Server.Models.Users
 {
     [BsonIgnoreExtraElements]
-    public class User
+    public class Route
     {
 
         [BsonId]
@@ -27,5 +27,14 @@ namespace Reservation_Server.Models.Users
         public bool IsActive { get; set; } = true;
        
   
+    }
+
+    public class LoginRequest
+    {
+        [BsonElement("nic")]
+        public string Nic { get; set; }
+
+        [BsonElement("password")]
+        public string Password { get; set; }
     }
 }

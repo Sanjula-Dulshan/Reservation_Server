@@ -19,13 +19,13 @@ namespace Reservation_Server.Controllers.Users
         }
 
         [HttpGet]
-        public ActionResult<List<User>> Get()
+        public ActionResult<List<Models.Users.Route>> Get()
         {
             return userService.Get();
         }
 
         [HttpGet("{nic}")]
-        public ActionResult<User> Get(string nic)
+        public ActionResult<Models.Users.Route> Get(string nic)
         {
             var user = userService.Get(nic);
 
@@ -38,7 +38,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public ActionResult<Models.Users.Route> Post([FromBody] Models.Users.Route user)
         {
             var result = userService.Create(user);
 
@@ -47,7 +47,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{nic}")]
-        public ActionResult Put(string nic, [FromBody] User user)
+        public ActionResult Put(string nic, [FromBody] Models.Users.Route user)
         {
             var existingUser = userService.Get(nic);
 
@@ -84,7 +84,7 @@ namespace Reservation_Server.Controllers.Users
         }
 
         [HttpPost("login")]
-        public ActionResult<User> Login([FromBody] LoginRequest loginRequest)
+        public ActionResult<Models.Users.Route> Login([FromBody] LoginRequest loginRequest)
         {
             var user = userService.Get(loginRequest.Nic);
 
@@ -97,7 +97,18 @@ namespace Reservation_Server.Controllers.Users
 
             if (isPasswordVerified == "true")
             {
-                return user;
+
+                // Create a new user object without the password
+                var userWithoutPassword = new Models.Users.Route
+                {
+                    Nic = user.Nic,
+                    Name = user.Name,
+                    Email = user.Email,
+                    IsTraveler = user.IsTraveler,
+                    IsActive = user.IsActive
+                };
+
+                return userWithoutPassword;
             }
             else if (isPasswordVerified == "deactivated")
             {
