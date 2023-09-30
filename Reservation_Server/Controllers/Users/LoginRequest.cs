@@ -1,4 +1,4 @@
-﻿namespace TravelAPI.Controllers
+﻿namespace Reservation_Server.Controllers.Users
 {
     public class LoginRequest
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TravelAPI.Models;
-using TravelAPI.Services;
+using Reservation_Server.Models.Users;
+using Reservation_Server.Services.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace TravelAPI.Controllers
+namespace Reservation_Server.Controllers.Users
 {
     [Route("api/user")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace TravelAPI.Controllers
         public UserController(IUserService userService)
         {
             this.userService = userService;
-            
+
         }
 
         [HttpGet]
@@ -29,14 +29,14 @@ namespace TravelAPI.Controllers
         {
             var user = userService.Get(nic);
 
-            if(user == null)
+            if (user == null)
             {
                 return NotFound($"User with Nic {nic} not found");
             }
             return user;
         }
 
-        
+
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
@@ -45,13 +45,13 @@ namespace TravelAPI.Controllers
             return Ok(result);
         }
 
-        
+
         [HttpPut("{nic}")]
         public ActionResult Put(string nic, [FromBody] User user)
         {
             var existingUser = userService.Get(nic);
 
-            if(existingUser == null)
+            if (existingUser == null)
             {
                 return NotFound($"User with nic = {nic} not found");
             }
@@ -93,17 +93,22 @@ namespace TravelAPI.Controllers
                 return NotFound($"User with Nic {loginRequest.Nic} not found");
             }
 
-            bool isPasswordVerified = userService.VerifyLogin(loginRequest.Nic, loginRequest.Password);
+            var isPasswordVerified = userService.Login(loginRequest.Nic, loginRequest.Password);
 
-            if (isPasswordVerified)
+            if (isPasswordVerified == "true")
             {
                 return user;
             }
+            else if (isPasswordVerified == "deactivated")
+            {
+                return BadRequest("deactivated");
+            }
             else
             {
-                return Unauthorized("Invalid NIC or password");
+                return BadRequest("Incorrect Nic or password");
 
             }
+
         }
     }
 }

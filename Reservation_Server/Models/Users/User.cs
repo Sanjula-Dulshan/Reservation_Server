@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace TravelAPI.Models
+namespace Reservation_Server.Models.Users
 {
     [BsonIgnoreExtraElements]
     public class User
@@ -9,7 +9,7 @@ namespace TravelAPI.Models
 
         [BsonId]
         [BsonElement("nic")]
-        public string Nic { get; set; }  
+        public string Nic { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace TravelAPI.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-        [BsonElement("isTraveler")] 
+        [BsonElement("isTraveler")]
         public bool IsTraveler { get; set; }
 
         [BsonElement("isActive")]

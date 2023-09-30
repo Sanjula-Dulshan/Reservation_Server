@@ -1,6 +1,6 @@
-﻿using TravelAPI.Models;
+﻿using Reservation_Server.Models.Users;
 
-namespace TravelAPI.Services
+namespace Reservation_Server.Services.Users
 {
     public interface IUserService
     {
@@ -9,7 +9,7 @@ namespace TravelAPI.Services
         string Create(User user);
         void Update(string nic, User user);
         void Delete(string nic);
-        bool VerifyLogin(string nic, string password);
+        string Login(string nic, string password);
         string UpdateStatus(string nic);
 
 

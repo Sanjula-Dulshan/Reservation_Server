@@ -1,9 +1,9 @@
 ﻿using MongoDB.Driver;
+using Reservation_Server.Models.Users;
 using System.Security.Cryptography;
 using System.Text;
-using TravelAPI.Models;
 
-namespace TravelAPI.Services
+namespace Reservation_Server.Services.Users
 {
     public class UserService : IUserService
     {
@@ -85,16 +85,28 @@ namespace TravelAPI.Services
         }
 
 
-        public bool VerifyLogin(string nic, string password)
+        public string Login(string nic, string password)
         {
             var user = _users.Find(u => u.Nic == nic).FirstOrDefault();
+
+            
 
             Console.WriteLine(user.Password);
 
             if (user == null)
-                return false;
+                return "null";
+            if(!user.IsActive)
+                return "deactivated";
+            var isVerified =  VerifyPassword(password, user.Password);
 
-            return VerifyPassword(password, user.Password);
+            if (isVerified)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
         }
 
         private static bool VerifyPassword(string plainTextPassword, string storeddPassword)

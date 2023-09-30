@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using TravelAPI.Models;
-using TravelAPI.Services;
+using Reservation_Server.Models.Users;
+using Reservation_Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
