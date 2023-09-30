@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using Reservation_Server.Models.TrainModel;
 using Reservation_Server.Models.Users;
+using Reservation_Server.Services.TrainService;
 using Reservation_Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +20,15 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 
- 
 
+// Train services
+/*builder.Services.Configure<TrainStoreDatabaseSettings>(
+       builder.Configuration.GetSection(nameof(TrainStoreDatabaseSettings)));
+
+builder.Services.AddSingleton<ITrainStoreDatabaseSettings>(sp =>
+       sp.GetRequiredService<IOptions<TrainStoreDatabaseSettings>>().Value);*/
+
+builder.Services.AddScoped<ITrainService, TrainService>();
 
 
 builder.Services.AddControllers();
