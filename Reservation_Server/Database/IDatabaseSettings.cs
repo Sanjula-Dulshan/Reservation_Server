@@ -1,6 +1,6 @@
-﻿namespace Reservation_Server.Models.Users
+﻿namespace Reservation_Server.Database
 {
-    public interface IUserStoreDatabaseSettings
+    public interface IDatabaseSettings
     {
         string UserCollectionName { get; set; }
         string TrainsCollectionName { get; set; }

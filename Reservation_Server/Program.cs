@@ -1,33 +1,23 @@
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using Reservation_Server.Models.TrainModel;
-using Reservation_Server.Models.Users;
+using Reservation_Server.Database;
 using Reservation_Server.Services.TrainService;
 using Reservation_Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add user services to the container.
-builder.Services.Configure<UserStoreDatabaseSettings>(
-        builder.Configuration.GetSection(nameof(UserStoreDatabaseSettings)));
+builder.Services.Configure<DatabaseSettings>(
+        builder.Configuration.GetSection(nameof(DatabaseSettings)));
 
-builder.Services.AddSingleton<IUserStoreDatabaseSettings>(sp =>
-        sp.GetRequiredService<IOptions<UserStoreDatabaseSettings>>().Value);
+builder.Services.AddSingleton<IDatabaseSettings>(sp =>
+        sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
 builder.Services.AddSingleton<IMongoClient>(sp =>
-        new MongoClient(builder.Configuration.GetValue<string>("UserStoreDatabaseSettings:ConnectionString")));
+        new MongoClient(builder.Configuration.GetValue<string>("DatabaseSettings:ConnectionString")));
 
 builder.Services.AddScoped<IUserService, UserService>();
-
-
-// Train services
-/*builder.Services.Configure<TrainStoreDatabaseSettings>(
-       builder.Configuration.GetSection(nameof(TrainStoreDatabaseSettings)));
-
-builder.Services.AddSingleton<ITrainStoreDatabaseSettings>(sp =>
-       sp.GetRequiredService<IOptions<TrainStoreDatabaseSettings>>().Value);*/
-
 builder.Services.AddScoped<ITrainService, TrainService>();
 
 
@@ -39,7 +29,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "User API",
+        Title = "Train Reservation API",
         
     });
 });

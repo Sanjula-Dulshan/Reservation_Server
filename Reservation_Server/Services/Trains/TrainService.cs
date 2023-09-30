@@ -1,6 +1,6 @@
 ﻿using Reservation_Server.Models.TrainModel;
 using MongoDB.Driver;
-using Reservation_Server.Models.Users;
+using Reservation_Server.Database;
 
 namespace Reservation_Server.Services.TrainService
 {
@@ -8,7 +8,7 @@ namespace Reservation_Server.Services.TrainService
     {
         private readonly IMongoCollection<Train> _trains;
 
-        public TrainService(IUserStoreDatabaseSettings settings , IMongoClient mongoClient)
+        public TrainService(IDatabaseSettings settings , IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
             _trains = database.GetCollection<Train>(settings.TrainsCollectionName); 
