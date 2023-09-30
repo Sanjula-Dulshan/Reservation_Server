@@ -29,8 +29,6 @@ namespace TravelAPI.Controllers
         {
             var user = userService.Get(nic);
 
-            
-
             if(user == null)
             {
                 return NotFound($"User with Nic {nic} not found");
@@ -44,7 +42,7 @@ namespace TravelAPI.Controllers
         {
             var result = userService.Create(user);
 
-            return result;
+            return Ok(result);
         }
 
         
@@ -60,6 +58,14 @@ namespace TravelAPI.Controllers
 
             userService.Update(nic, user);
             return Ok("Updated");
+        }
+
+        [HttpPatch("active_deactive/{nic}")]
+        public ActionResult UpdateStatus(string nic)
+        {
+
+            var result = userService.UpdateStatus(nic);
+            return Ok(result);
         }
 
         [HttpDelete("{nic}")]

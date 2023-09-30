@@ -20,13 +20,16 @@ namespace TravelAPI.Models
         [BsonElement("password")]
         public string Password { get; set; }
 
-        [BsonElement("isAdmin")] 
-        public bool IsAdmin { get; set; }
+        [BsonElement("isTraveler")] 
+        public bool IsTraveler { get; set; }
 
+        [BsonElement("isActive")]
+        public bool IsActive { get; set; }
+        // Set the default value 
         public User()
         {
-            // Set the default value for isAdmin
-            IsAdmin = false;
+            IsTraveler = true;
+            IsActive = true;
         }
     }
 }

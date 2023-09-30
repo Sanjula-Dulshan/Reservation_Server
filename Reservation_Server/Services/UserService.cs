@@ -15,17 +15,18 @@ namespace TravelAPI.Services
             _users = database.GetCollection<User>(settings.UserCollectionName);
 
         }
-        public User Create(User user)
+        public string Create(User user)
         {
             var existingUser = _users.Find(u => u.Nic == user.Nic).FirstOrDefault();
             if (existingUser != null)
             {
-                return null;
+                return "User NIC already exists.";
             }
 
             user.Password = HashPassword(user.Password);
+
             _users.InsertOne(user);
-            return user;
+            return "User registered successfully.";
         }
 
         public void Delete(string nic)
@@ -45,7 +46,25 @@ namespace TravelAPI.Services
 
         public void Update(string id, User user)
         {
+            user.Password = HashPassword(user.Password);
+
             _users.ReplaceOne(user => user.Nic == id, user);
+        }
+
+        public string UpdateStatus(string nic)
+        {
+            var user = _users.Find(user => user.Nic == nic).FirstOrDefault();
+            var status = !user.IsActive;
+            _users.UpdateOne(user => user.Nic == nic, Builders<User>.Update.Set("IsActive", status));
+
+            if (status)
+            {
+                return "activated";
+            }
+            else
+            {
+                return "deactivated";
+            }
         }
 
         private static string HashPassword(string password)
@@ -70,6 +89,8 @@ namespace TravelAPI.Services
         {
             var user = _users.Find(u => u.Nic == nic).FirstOrDefault();
 
+            Console.WriteLine(user.Password);
+
             if (user == null)
                 return false;
 
@@ -78,6 +99,8 @@ namespace TravelAPI.Services
 
         private static bool VerifyPassword(string plainTextPassword, string storeddPassword)
         {
+            Console.WriteLine($"plainTextPassword {plainTextPassword}");
+            Console.WriteLine($"storeddPassword {storeddPassword}");
             string hashedPassword = HashPassword(plainTextPassword);
             return hashedPassword.Equals(storeddPassword);
         }
