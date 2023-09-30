@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using Reservation_Server.Database;
 using Reservation_Server.Models.Users;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Reservation_Server.Services.Users
     {
         private readonly IMongoCollection<User> _users;
 
-        public UserService(IUserStoreDatabaseSettings settings, IMongoClient mongoClient)
+        public UserService(IDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
             _users = database.GetCollection<User>(settings.UserCollectionName);

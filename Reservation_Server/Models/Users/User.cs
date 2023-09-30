@@ -21,15 +21,11 @@ namespace Reservation_Server.Models.Users
         public string Password { get; set; }
 
         [BsonElement("isTraveler")]
-        public bool IsTraveler { get; set; }
+        public bool IsTraveler { get; set; } = true;
 
         [BsonElement("isActive")]
-        public bool IsActive { get; set; }
-        // Set the default value 
-        public User()
-        {
-            IsTraveler = true;
-            IsActive = true;
-        }
+        public bool IsActive { get; set; } = true;
+       
+  
     }
 }
