@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Routes\" />
-    <Folder Include="Controllers\Reservations\" />
   </ItemGroup>
 
 </Project>

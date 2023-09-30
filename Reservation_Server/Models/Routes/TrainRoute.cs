@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Reservation_Server.Models.Routes
 {
-    public class Route
+    public class TrainRoute
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -16,6 +16,6 @@ namespace Reservation_Server.Models.Routes
         public string End { get; set; }
 
         [BsonElement("price")]
-        public string Price { get; set; }
+        public int Price { get; set; }
     }
 }
