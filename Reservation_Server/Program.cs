@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Reservation_Server.Database;
+using Reservation_Server.Services.Inquiries;
 using Reservation_Server.Services.Reservations;
 using Reservation_Server.Services.Routes;
 using Reservation_Server.Services.TrainService;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITrainService, TrainService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ITrainRouteService, TrainRouteService>();
+builder.Services.AddScoped<IInquiryService, InquiryService>();
 
 
 builder.Services.AddControllers();

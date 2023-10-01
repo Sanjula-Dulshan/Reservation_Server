@@ -12,8 +12,5 @@ namespace Reservation_Server.Services.Users
         string Login(string nic, string password);
         string UpdateStatus(string nic);
 
-
-
-
     }
 }
