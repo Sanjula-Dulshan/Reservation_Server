@@ -19,13 +19,13 @@ namespace Reservation_Server.Controllers.Users
         }
 
         [HttpGet]
-        public ActionResult<List<Models.Users.Route>> Get()
+        public ActionResult<List<User>> Get()
         {
             return userService.Get();
         }
 
         [HttpGet("{nic}")]
-        public ActionResult<Models.Users.Route> Get(string nic)
+        public ActionResult<User> Get(string nic)
         {
             var user = userService.Get(nic);
 
@@ -38,7 +38,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPost]
-        public ActionResult<Models.Users.Route> Post([FromBody] Models.Users.Route user)
+        public ActionResult<User> Post([FromBody] User user)
         {
             var result = userService.Create(user);
 
@@ -47,7 +47,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{nic}")]
-        public ActionResult Put(string nic, [FromBody] Models.Users.Route user)
+        public ActionResult Put(string nic, [FromBody]User user)
         {
             var existingUser = userService.Get(nic);
 
@@ -84,7 +84,7 @@ namespace Reservation_Server.Controllers.Users
         }
 
         [HttpPost("login")]
-        public ActionResult<Models.Users.Route> Login([FromBody] LoginRequest loginRequest)
+        public ActionResult<User> Login([FromBody] LoginRequest loginRequest)
         {
             var user = userService.Get(loginRequest.Nic);
 
@@ -99,7 +99,7 @@ namespace Reservation_Server.Controllers.Users
             {
 
                 // Create a new user object without the password
-                var userWithoutPassword = new Models.Users.Route
+                var userWithoutPassword = new User
                 {
                     Nic = user.Nic,
                     Name = user.Name,

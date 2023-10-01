@@ -5,7 +5,7 @@ namespace Reservation_Server.Services.Reservations
     public interface IReservationService
     {
         List<Reservation> Get();
-        Reservation Get(string id);
+        List <Reservation> Get(string trainId, DateTime reservedDate);
         Reservation Create(Reservation reservation);
         void Update(string id, Reservation reservation);
         void Remove(string id);

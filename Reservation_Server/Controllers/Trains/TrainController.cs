@@ -95,5 +95,13 @@ namespace Reservation_Server.Controllers.TrainController
 
             return Ok($"Train with Id = {id} updated successfully");
         }
+
+        [HttpPost("search")]
+        public ActionResult<SearchResponse> GetAvailableTrains([FromBody] SearchRequest searchRequest)
+        {
+            var results = trainService.GetAvailableTrains(searchRequest);
+
+            return results;
+        }
     }
 }

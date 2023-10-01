@@ -19,10 +19,6 @@ namespace Reservation_Server.Models.TrainModel
         [BsonElement("seat_count")]
         public int SeatCount { get; set; }
 
-        [BsonElement("fee_per_station")]
-        public double FeePerStation { get; set; }
-
-
         [BsonElement("stations")]
         public List<Station>? Stations { get; set; }
 
@@ -45,5 +41,64 @@ namespace Reservation_Server.Models.TrainModel
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime Time { get; set; } = DateTime.MinValue;
     }
+
+    public class SearchRequest
+    {
+       
+        [BsonElement("no_of_seats")]
+        public int NoOfSeats { get; set; }
+
+        [BsonElement("date")]
+        public DateTime Date { get; set; }
+
+        [BsonElement("start")]
+        public string Start { get; set; }
+
+        [BsonElement("end")]
+        public string End { get; set; }
+
+    }
+
+    public class SearchResponse
+    {
+        [BsonElement("train_list")]
+        public List<TrainList> TrainList { get; set; }
+
+        [BsonElement("ticket_price")]
+        public double TicketPrice { get; set; }
+
+        [BsonElement("total_price")]
+        public double TotalPrice { get; set; }
+
+    }
+
+    public class TrainList
+    {
+        [BsonElement("train_id")]
+        public string TrainId { get; set; }
+
+        [BsonElement("train_name")]
+        public string TrainName { get; set; }
+
+        [BsonElement("start")]
+        public string Start { get; set; }
+
+        [BsonElement("end")]
+        public string End { get; set; }
+
+        [BsonElement("start_time")]
+        public DateTime StartTime { get; set; }
+
+        [BsonElement("end_time")]
+        public DateTime EndTime { get; set; }
+
+        [BsonElement("no_of_seats")]
+        public int NoOfSeats { get; set; }
+
+        
+
+    }
+
+
 
 }

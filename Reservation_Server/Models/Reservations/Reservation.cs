@@ -19,10 +19,10 @@ namespace Reservation_Server.Models.Reservations
         public string RouteId { get; set; }
 
         [BsonElement("no_of_seats")]
-        public string NoOfSeats { get; set; }
+        public int NoOfSeats { get; set; }
 
         [BsonElement("date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [BsonElement("total_price")]
         public string TotalPrice { get; set; }
@@ -34,4 +34,5 @@ namespace Reservation_Server.Models.Reservations
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
+
 }

@@ -16,7 +16,13 @@ namespace Reservation_Server.Services.Routes
         }
         public int GetTripPrice(string start, string end) {
 
+            Console.WriteLine($"start>> {start}");
+            Console.WriteLine($"end>> {end}");
+
             var route = _routes.Find(trainRoute => trainRoute.Start == start && trainRoute.End == end).FirstOrDefault();
+
+            Console.WriteLine($"route>> {route.Price}");
+
             return route.Price;
         }
     }

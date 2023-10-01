@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Reservation_Server.Models.Users
 {
     [BsonIgnoreExtraElements]
-    public class Route
+    public class User
     {
 
         [BsonId]

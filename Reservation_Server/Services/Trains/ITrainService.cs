@@ -6,6 +6,7 @@ namespace Reservation_Server.Services.TrainService
     {
         List<Train> Get();
         Train Get(string id);
+        SearchResponse GetAvailableTrains(SearchRequest searchRequest);
         Train Create(Train train);
         void Update(string id, Train train);
         void Delete(string id);
