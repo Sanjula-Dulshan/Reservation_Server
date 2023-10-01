@@ -6,6 +6,7 @@
         string TrainsCollectionName { get; set; }
         string ReservationsCollectionName { get; set; }
         string RoutesCollectionName { get; set; }
+        string InquiriesCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
 

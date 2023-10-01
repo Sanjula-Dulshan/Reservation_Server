@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Reservation_Server.Models.Reservations;
-using Reservation_Server.Models.Users;
 using Reservation_Server.Services.Reservations;
-using Reservation_Server.Services.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -75,7 +73,7 @@ namespace Reservation_Server.Controllers.Users
             }
             reservationService.Delete(id);
 
-            return Ok($"Reservation deleted");
+            return Ok("Reservation deleted");
         }
 
     }
