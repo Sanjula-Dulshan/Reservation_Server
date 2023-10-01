@@ -75,7 +75,7 @@ namespace Reservation_Server.Controllers.TrainController
                 return NotFound($"Train with id = {id} not found ");
             }
 
-            trainService.Remove(trainToDelete.Id);
+            trainService.Delete(trainToDelete.Id);
 
             return Ok($"Train with Id = {id} deleted");
         }
@@ -94,6 +94,14 @@ namespace Reservation_Server.Controllers.TrainController
             trainService.UpdateStatus(id);
 
             return Ok($"Train with Id = {id} updated successfully");
+        }
+
+        [HttpPost("search")]
+        public ActionResult<SearchResponse> GetAvailableTrains([FromBody] SearchRequest searchRequest)
+        {
+            var results = trainService.GetAvailableTrains(searchRequest);
+
+            return results;
         }
     }
 }

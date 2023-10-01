@@ -28,4 +28,13 @@ namespace Reservation_Server.Models.Users
        
   
     }
+
+    public class LoginRequest
+    {
+        [BsonElement("nic")]
+        public string Nic { get; set; }
+
+        [BsonElement("password")]
+        public string Password { get; set; }
+    }
 }

@@ -13,7 +13,7 @@ namespace Reservation_Server.Services.Users
         public UserService(IDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
-            _users = database.GetCollection<User>(settings.UserCollectionName);
+            _users = database.GetCollection<User>(settings.UsersCollectionName);
 
         }
         public string Create(User user)
@@ -102,6 +102,7 @@ namespace Reservation_Server.Services.Users
 
             if (isVerified)
             {
+
                 return "true";
             }
             else

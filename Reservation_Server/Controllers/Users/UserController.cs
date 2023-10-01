@@ -47,7 +47,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{nic}")]
-        public ActionResult Put(string nic, [FromBody] User user)
+        public ActionResult Put(string nic, [FromBody]User user)
         {
             var existingUser = userService.Get(nic);
 
@@ -97,7 +97,18 @@ namespace Reservation_Server.Controllers.Users
 
             if (isPasswordVerified == "true")
             {
-                return user;
+
+                // Create a new user object without the password
+                var userWithoutPassword = new User
+                {
+                    Nic = user.Nic,
+                    Name = user.Name,
+                    Email = user.Email,
+                    IsTraveler = user.IsTraveler,
+                    IsActive = user.IsActive
+                };
+
+                return userWithoutPassword;
             }
             else if (isPasswordVerified == "deactivated")
             {
