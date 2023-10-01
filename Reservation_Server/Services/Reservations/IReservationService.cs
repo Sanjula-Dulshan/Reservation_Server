@@ -6,9 +6,11 @@ namespace Reservation_Server.Services.Reservations
     {
         List<Reservation> Get();
         List <Reservation> Get(string trainId, DateTime reservedDate);
+        Reservation Get(string id);
+
         Reservation Create(Reservation reservation);
         void Update(string id, Reservation reservation);
-        void Remove(string id);
-
+        void Delete(string id);
+       
     }
 }
