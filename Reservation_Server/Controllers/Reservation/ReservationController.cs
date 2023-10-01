@@ -58,8 +58,8 @@ namespace Reservation_Server.Controllers.Users
                 return NotFound("Reservation not found");
             }
 
-            reservationService.Update(id, reservation);
-            return Ok("Updated");
+            var result = reservationService.Update(id, reservation);
+            return Ok(result);
         }
 
 
