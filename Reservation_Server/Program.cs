@@ -10,6 +10,17 @@ using Reservation_Server.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//allow cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder
+            .WithOrigins("http://localhost:3000")  // Allow requests from this origin
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+});
+
 // Add user services to the container.
 builder.Services.Configure<DatabaseSettings>(
         builder.Configuration.GetSection(nameof(DatabaseSettings)));
@@ -54,5 +65,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors("CorsPolicy");
 
 app.Run();
