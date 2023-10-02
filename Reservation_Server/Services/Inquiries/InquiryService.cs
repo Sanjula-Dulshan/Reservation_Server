@@ -8,6 +8,7 @@ namespace Reservation_Server.Services.Inquiries
     {
         private readonly IMongoCollection<Inquiry> _inquiries;  
 
+        // Constructor for InquiryService: Initializes database and inquiry collection.
         public InquiryService(IDatabaseSettings settings, IMongoClient mongoClient)
         {
 
@@ -15,32 +16,39 @@ namespace Reservation_Server.Services.Inquiries
             _inquiries = database.GetCollection<Inquiry>(settings.InquiriesCollectionName);
 
         }
+
+        // Creates a new inquiry
         public Inquiry Create(Inquiry inquiry)
         {
             _inquiries.InsertOne(inquiry);
             return inquiry;
         }
 
+        // Deletes the inquiry with the specified ID
         public void Delete(string id)
         {
             _inquiries.DeleteOne(inquiry => inquiry.Id == id);
         }
 
+        // Retrieves a list of all inquiries
         public List<Inquiry> Get()
         {
             return _inquiries.Find(inquiry => true).ToList();
         }
 
+        // Retrieves an inquiry given ID
         public Inquiry Get(string id)
         {
             return _inquiries.Find(inquiry => inquiry.Id == id).FirstOrDefault();
         }
 
+        // Updates the inquiry with the specified ID
         public void Update(string id, Inquiry inquiry)
         {
             _inquiries.ReplaceOne(inquiry => inquiry.Id == id, inquiry);
         }
 
+        // Updates the status of the inquiry with the specified ID
         public void UpdateStatus(string id)
         {
             Inquiry inquiry = _inquiries.Find(inquiry => inquiry.Id == id).FirstOrDefault();
