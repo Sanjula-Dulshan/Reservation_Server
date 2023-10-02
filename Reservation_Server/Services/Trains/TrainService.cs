@@ -12,7 +12,7 @@ namespace Reservation_Server.Services.TrainService
         private readonly ITrainRouteService trainRouteService;
         private readonly IReservationService reservationService;
 
-
+        // Constructor for TrainService: Initializes database and train collection.
         public TrainService(IDatabaseSettings settings, IMongoClient mongoClient, ITrainRouteService trainRouteService, IReservationService reservationService)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
@@ -22,6 +22,7 @@ namespace Reservation_Server.Services.TrainService
             this.reservationService = reservationService;
         }
 
+        // Creates a new train and registers it in the system.
         public Train Create(Train train)
         {
 
@@ -29,26 +30,31 @@ namespace Reservation_Server.Services.TrainService
             return train;
         }
 
+        // Retrieves a list of all trains from the database
         public List<Train> Get()
         {
             return _trains.Find(train => true).ToList();
         }
 
+        // Retrieves a train given ID
         public Train Get(string id)
         {
             return _trains.Find(train => train.Id == id).FirstOrDefault();
         }
 
+        // Deletes the train with the specified ID
         public void Delete(string id)
         {
             _trains.DeleteOne(train => train.Id == id);
         }
 
+        // Updates the train with the specified ID
         public void Update(string id, Train train)
         {
             _trains.ReplaceOne(train => train.Id == id, train);
         }
 
+        // Updates the status of the train with the specified ID
         public void UpdateStatus(string id)
         {
             var train = _trains.Find(train => train.Id == id).FirstOrDefault();
@@ -56,15 +62,12 @@ namespace Reservation_Server.Services.TrainService
             _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
         }
 
+        // Retrieves available trains and total price based on the provided search criteria
         public SearchResponse GetAvailableTrains(SearchRequest searchRequest)
         {
-
+            // Get the price for the trip between the start and end stations.
             int price = trainRouteService.GetTripPrice(searchRequest.Start, searchRequest.End);
-            /* var trains = _trains.Find(train => train.Stations.Any(station => station.StationName == searchRequest.Start) && 
-             train.Stations.Any(station => station.StationName == searchRequest.End)).ToList();
-            */
 
-            // Get trains by going through all stations and check if departure and arrival are in the list of stations.
             var trains = _trains.Find(train =>
                 train.Stations != null &&
                 train.Stations.Any(station => station.StationName == searchRequest.Start) &&
@@ -73,13 +76,15 @@ namespace Reservation_Server.Services.TrainService
                                               station.Time < train.Stations.First(s => s.StationName == searchRequest.End).Time)
             ).ToList();
 
-            Console.WriteLine($"trains {trains}");
 
-           List<TrainList> availableTrainList = new List<TrainList>();
+           List<TrainList> availableTrainList = new();
 
             foreach (var train in trains)
             {
+                // Calculate the number of reserved seats for the train.
                 var reservedSeats = reservationService.Get(train.Id, searchRequest.Date).Sum(reservation => reservation.NoOfSeats);
+
+                // Calculate the available seats for the train.
                 var availableSeats = train.SeatCount - reservedSeats;
                 if (availableSeats > 0 && availableSeats >= searchRequest.NoOfSeats)
                 {
