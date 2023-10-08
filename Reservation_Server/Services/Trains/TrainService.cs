@@ -43,9 +43,17 @@ namespace Reservation_Server.Services.TrainService
         }
 
         // Deletes the train with the specified ID
-        public void Delete(string id)
+        public string Delete(string id)
         {
+            int reservationCount = reservationService.GetByTrainId(id);
+            Console.WriteLine($"reservationCount {reservationCount}");
+            if (reservationCount > 0)
+            {
+                return $"Train cannot be deleted as it has {reservationCount} reservation";
+                
+            }
             _trains.DeleteOne(train => train.Id == id);
+            return "Train deleted successfully";
         }
 
         // Updates the train with the specified ID

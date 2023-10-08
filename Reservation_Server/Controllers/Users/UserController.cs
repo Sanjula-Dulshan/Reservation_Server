@@ -86,6 +86,7 @@ namespace Reservation_Server.Controllers.Users
         [HttpPost("login")]
         public ActionResult<User> Login([FromBody] LoginRequest loginRequest)
         {
+            Console.WriteLine("sssss>>>>",loginRequest.Nic);
             var user = userService.Get(loginRequest.Nic);
 
             if (user == null)
@@ -105,6 +106,8 @@ namespace Reservation_Server.Controllers.Users
                     Name = user.Name,
                     Email = user.Email,
                     IsTraveler = user.IsTraveler,
+                    IsAgent = user.IsAgent,
+                    IsBackOffice = user.IsBackOffice,
                     IsActive = user.IsActive
                 };
 
