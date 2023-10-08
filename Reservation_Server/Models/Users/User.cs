@@ -23,6 +23,12 @@ namespace Reservation_Server.Models.Users
         [BsonElement("isTraveler")]
         public bool IsTraveler { get; set; } = true;
 
+        [BsonElement("isAgent")]
+        public bool IsAgent { get; set; } = false;
+
+        [BsonElement("isBackOffice")]
+        public bool IsBackOffice { get; set; } = false;
+
         [BsonElement("isActive")]
         public bool IsActive { get; set; } = true;
        
