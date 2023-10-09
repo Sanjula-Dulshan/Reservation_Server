@@ -63,12 +63,33 @@ namespace Reservation_Server.Services.TrainService
         }
 
         // Updates the status of the train with the specified ID
-        public void UpdateStatus(string id)
+        public string UpdateStatus(string id)
         {
+            int reservationCount = reservationService.GetByTrainId(id);
+            Console.WriteLine($"reservationCount {reservationCount}");
+
             var train = _trains.Find(train => train.Id == id).FirstOrDefault();
             train.IsActive = !train.IsActive;
-            _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
-        }
+
+            if (reservationCount > 0 && !train.IsActive )
+            {
+                return $"Train cannot be deactivated as it has {reservationCount} reservation";
+
+            }
+            if (train.IsActive)
+            {
+                _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
+                return "Train activated successfully";
+            }
+            else
+            {
+                _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
+                return "Train deactivated successfully";
+            }
+
+            
+
+           }
 
         // Retrieves available trains and total price based on the provided search criteria
         public SearchResponse GetAvailableTrains(SearchRequest searchRequest)
