@@ -91,9 +91,9 @@ namespace Reservation_Server.Controllers.TrainController
                 return NotFound($"Train with id = {id} not found ");
             }
 
-            trainService.UpdateStatus(id);
+            var result = trainService.UpdateStatus(id);
 
-            return Ok($"Train with Id = {id} updated successfully");
+            return Ok(result);
         }
 
         [HttpPost("search")]
