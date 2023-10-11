@@ -1,8 +1,15 @@
-﻿using Microsoft.Extensions.Options;
+﻿/*
+    Sri Lanka Institute of Information Technology
+    Year  :  4th Year 2nd Semester
+    Module Code  :  SE4040
+    Module  :  Enterprise Application Development
+    Contributor  :  IT20253530, IT20240042, IT20140120, IT20265892
+*/
+
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Reservation_Server.Database;
-using Reservation_Server.Services.Inquiries;
 using Reservation_Server.Services.Reservations;
 using Reservation_Server.Services.Routes;
 using Reservation_Server.Services.TrainService;
@@ -25,7 +32,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITrainService, TrainService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ITrainRouteService, TrainRouteService>();
-builder.Services.AddScoped<IInquiryService, InquiryService>();
 
 builder.Services.AddCors(options =>
 {
@@ -40,7 +46,6 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

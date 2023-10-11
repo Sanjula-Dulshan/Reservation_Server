@@ -1,4 +1,12 @@
-﻿using MongoDB.Driver;
+﻿/*
+    Sri Lanka Institute of Information Technology
+    Year  :  4th Year 2nd Semester
+    Module Code  :  SE4040
+    Module  :  Enterprise Application Development
+    Contributor  :  IT20253530, IT20240042, IT20140120, IT20265892
+*/
+
+using MongoDB.Driver;
 using Reservation_Server.Database;
 using Reservation_Server.Models.Reservations;
 using Reservation_Server.Models.TrainModel;
@@ -39,9 +47,14 @@ namespace Reservation_Server.Services.Reservations
         }
 
         // Retrieves a list of all reservations for a given train on a given date
-        public List<Reservation> Get(string trainId, DateTime reservedDate)
-        {
-           return _reservations.Find(reservation => reservation.TrainId == trainId && reservation.Date.Date == reservedDate.Date).ToList();
+        public List<Reservation> Get(string trainId, DateTime reservedDate) { 
+
+            Console.WriteLine($"trainId>> {trainId} reservedDate {reservedDate}");
+
+            List<Reservation> values = _reservations.Find(reservation => reservation.TrainId == trainId && reservation.Date.Date == reservedDate.Date).ToList();
+
+            Console.WriteLine($"values {values.Count}");
+            return values;
         }
 
         // Retrieves a reservation given ID
@@ -63,7 +76,8 @@ namespace Reservation_Server.Services.Reservations
             int price = trainRouteService.GetTripPrice(reservation.FromStation, reservation.ToStation);
 
             // Calculate the total number of reserved seats for the train on the given date.
-            int reservedSeats = Get(reservation.TrainId, reservation.Date).Sum(res => res.NoOfSeats);
+            var t = Get(reservation.TrainId, reservation.Date);
+            int reservedSeats = t.Sum(res => res.NoOfSeats);
             var train = _trains.Find(train => train.Id == reservation.TrainId).FirstOrDefault();
 
             // Calculate the number of available seats for the train.
