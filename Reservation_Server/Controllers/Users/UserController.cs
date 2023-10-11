@@ -113,19 +113,9 @@ namespace Reservation_Server.Controllers.Users
             if (isPasswordVerified == "true")
             {
 
-                // Create a new user object without the password
-                var userWithoutPassword = new User
-                {
-                    Nic = user.Nic,
-                    Name = user.Name,
-                    Email = user.Email,
-                    IsTraveler = user.IsTraveler,
-                    IsAgent = user.IsAgent,
-                    IsBackOffice = user.IsBackOffice,
-                    IsActive = user.IsActive
-                };
 
-                return userWithoutPassword;
+
+                return user;
             }
             else if (isPasswordVerified == "deactivated")
             {
