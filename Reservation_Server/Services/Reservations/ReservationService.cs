@@ -70,7 +70,7 @@ namespace Reservation_Server.Services.Reservations
         }
 
         // Updates the reservation with the specified ID
-        public object Update(string id, Reservation reservation)
+        public string Update(string id, Reservation reservation)
         {
 
             int price = trainRouteService.GetTripPrice(reservation.FromStation, reservation.ToStation);
@@ -89,7 +89,7 @@ namespace Reservation_Server.Services.Reservations
             }
             reservation.TotalPrice = price * reservation.NoOfSeats;
             _reservations.ReplaceOne(reservation => reservation.Id == id, reservation);
-            return reservation;
+            return "Updated";
         }
 
         public int GetByTrainId(string trainId)

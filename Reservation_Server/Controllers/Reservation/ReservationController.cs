@@ -8,6 +8,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Reservation_Server.Models.Reservations;
+using Reservation_Server.Models.Users;
 using Reservation_Server.Services.Reservations;
 
 
@@ -54,7 +55,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Reservation reservation)
+        public ActionResult<Response> Put(string id, [FromBody] Reservation reservation)
         {
             var existingReservation = reservationService.Get(id);
 
@@ -64,7 +65,13 @@ namespace Reservation_Server.Controllers.Users
             }
 
             var result = reservationService.Update(id, reservation);
-            return Ok(result);
+
+            Response response = new()
+            {
+                message = result
+            };
+
+            return Ok(response);
         }
 
 
