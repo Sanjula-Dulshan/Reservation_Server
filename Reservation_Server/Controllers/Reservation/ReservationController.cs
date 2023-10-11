@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+    Sri Lanka Institute of Information Technology
+    Year  :  4th Year 2nd Semester
+    Module Code  :  SE4040
+    Module  :  Enterprise Application Development
+    Contributor  :  IT20253530, IT20240042, IT20140120, IT20265892
+*/
+
+using Microsoft.AspNetCore.Mvc;
 using Reservation_Server.Models.Reservations;
+using Reservation_Server.Models.Users;
 using Reservation_Server.Services.Reservations;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Reservation_Server.Controllers.Users
 {
@@ -47,7 +55,7 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{id}")]
-        public ActionResult Put(string id, [FromBody] Reservation reservation)
+        public ActionResult<Response> Put(string id, [FromBody] Reservation reservation)
         {
             var existingReservation = reservationService.Get(id);
 
@@ -57,7 +65,13 @@ namespace Reservation_Server.Controllers.Users
             }
 
             var result = reservationService.Update(id, reservation);
-            return Ok(result);
+
+            Response response = new()
+            {
+                message = result
+            };
+
+            return Ok(response);
         }
 
 

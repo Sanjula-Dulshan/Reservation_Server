@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+    Sri Lanka Institute of Information Technology
+    Year  :  4th Year 2nd Semester
+    Module Code  :  SE4040
+    Module  :  Enterprise Application Development
+    Contributor  :  IT20253530, IT20240042, IT20140120, IT20265892
+*/
+
+using Microsoft.AspNetCore.Mvc;
 using Reservation_Server.Models.Users;
 using Reservation_Server.Services.Users;
 
@@ -38,11 +46,17 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public ActionResult<Response> Post([FromBody] User user)
         {
             var result = userService.Create(user);
 
-            return Ok(result);
+            Response userResponse = new()
+            {
+                message = result
+            };
+            return userResponse;
+
+
         }
 
 
@@ -86,7 +100,6 @@ namespace Reservation_Server.Controllers.Users
         [HttpPost("login")]
         public ActionResult<User> Login([FromBody] LoginRequest loginRequest)
         {
-            Console.WriteLine("sssss>>>>",loginRequest.Nic);
             var user = userService.Get(loginRequest.Nic);
 
             if (user == null)
