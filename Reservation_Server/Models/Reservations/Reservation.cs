@@ -31,6 +31,9 @@ namespace Reservation_Server.Models.Reservations
         [BsonElement("total_price")]
         public double TotalPrice { get; set; }
 
+        [BsonElement("isAgent")]
+        public bool IsAgent { get; set; } = false;
+
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
