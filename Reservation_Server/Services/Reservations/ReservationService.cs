@@ -78,6 +78,10 @@ namespace Reservation_Server.Services.Reservations
             return reservation;
         }
 
+        public int GetByTrainId(string trainId)
+        {
+            return _reservations.Find(reservation => reservation.TrainId == trainId).ToList().Count;
+        }
         
     }
 }

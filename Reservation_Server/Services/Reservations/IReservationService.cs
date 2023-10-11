@@ -10,6 +10,8 @@ namespace Reservation_Server.Services.Reservations
         Reservation Create(Reservation reservation);
         object Update(string id, Reservation reservation);
         void Delete(string id);
-       
+        public int GetByTrainId(string trainId);
+
+
     }
 }

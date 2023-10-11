@@ -21,7 +21,7 @@ namespace Reservation_Server.Models.Users
         public string Password { get; set; }
 
         [BsonElement("isTraveler")]
-        public bool IsTraveler { get; set; } = true;
+        public bool IsTraveler { get; set; } = false;
 
         [BsonElement("isAgent")]
         public bool IsAgent { get; set; } = false;

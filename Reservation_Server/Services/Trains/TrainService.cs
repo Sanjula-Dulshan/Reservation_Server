@@ -43,9 +43,17 @@ namespace Reservation_Server.Services.TrainService
         }
 
         // Deletes the train with the specified ID
-        public void Delete(string id)
+        public string Delete(string id)
         {
+            int reservationCount = reservationService.GetByTrainId(id);
+            Console.WriteLine($"reservationCount {reservationCount}");
+            if (reservationCount > 0)
+            {
+                return $"Train cannot be deleted as it has {reservationCount} reservation";
+                
+            }
             _trains.DeleteOne(train => train.Id == id);
+            return "Train deleted successfully";
         }
 
         // Updates the train with the specified ID
@@ -55,12 +63,33 @@ namespace Reservation_Server.Services.TrainService
         }
 
         // Updates the status of the train with the specified ID
-        public void UpdateStatus(string id)
+        public string UpdateStatus(string id)
         {
+            int reservationCount = reservationService.GetByTrainId(id);
+            Console.WriteLine($"reservationCount {reservationCount}");
+
             var train = _trains.Find(train => train.Id == id).FirstOrDefault();
             train.IsActive = !train.IsActive;
-            _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
-        }
+
+            if (reservationCount > 0 && !train.IsActive )
+            {
+                return $"Train cannot be deactivated as it has {reservationCount} reservation";
+
+            }
+            if (train.IsActive)
+            {
+                _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
+                return "Train activated successfully";
+            }
+            else
+            {
+                _trains.UpdateOne(train => train.Id == id, Builders<Train>.Update.Set("IsActive", train.IsActive));
+                return "Train deactivated successfully";
+            }
+
+            
+
+           }
 
         // Retrieves available trains and total price based on the provided search criteria
         public SearchResponse GetAvailableTrains(SearchRequest searchRequest)

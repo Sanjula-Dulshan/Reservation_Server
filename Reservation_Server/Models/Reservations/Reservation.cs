@@ -34,6 +34,7 @@ namespace Reservation_Server.Models.Reservations
         [BsonElement("isAgent")]
         public bool IsAgent { get; set; } = false;
 
+
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
