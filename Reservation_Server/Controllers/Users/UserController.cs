@@ -61,25 +61,41 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{nic}")]
-        public ActionResult Put(string nic, [FromBody]User user)
+        public ActionResult<Response> Put(string nic, [FromBody]User user)
         {
             var existingUser = userService.Get(nic);
 
             if (existingUser == null)
             {
-                return NotFound($"User with nic = {nic} not found");
+                Response userResponse = new()
+                {
+                    message = $"User not found"
+                };
+                return NotFound(userResponse);
             }
 
             userService.Update(nic, user);
-            return Ok("Updated");
+
+            Response userResponse1 = new()
+            {
+                message = $"User updated successfully"
+            };
+
+            return Ok(userResponse1);
+            
         }
 
         [HttpPatch("active_deactive/{nic}")]
-        public ActionResult UpdateStatus(string nic)
+        public ActionResult<Response> UpdateStatus(string nic)
         {
 
-            var result = userService.UpdateStatus(nic);
-            return Ok(result);
+            string result = userService.UpdateStatus(nic);
+
+            Response userResponse = new()
+            {
+                message = result
+            };
+            return Ok(userResponse);
         }
 
         [HttpDelete("{nic}")]
@@ -111,18 +127,23 @@ namespace Reservation_Server.Controllers.Users
 
             if (isPasswordVerified == "true")
             {
-
-
-
                 return user;
             }
             else if (isPasswordVerified == "deactivated")
             {
-                return BadRequest("deactivated");
+                Response userResponse = new()
+                {
+                    message = "Your Account Deactivated. Please contact us to Reactivate"
+                };
+                return BadRequest(userResponse);
             }
             else
             {
-                return BadRequest("Incorrect Nic or password");
+                Response userResponse = new()
+                {
+                    message = "Incorrect Nic or password"
+                };
+                return BadRequest(userResponse);
 
             }
 
