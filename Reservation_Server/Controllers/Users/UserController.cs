@@ -61,17 +61,28 @@ namespace Reservation_Server.Controllers.Users
 
 
         [HttpPut("{nic}")]
-        public ActionResult Put(string nic, [FromBody]User user)
+        public ActionResult<Response> Put(string nic, [FromBody]User user)
         {
             var existingUser = userService.Get(nic);
 
             if (existingUser == null)
             {
-                return NotFound($"User with nic = {nic} not found");
+                Response userResponse = new()
+                {
+                    message = $"User not found"
+                };
+                return NotFound(userResponse);
             }
 
             userService.Update(nic, user);
-            return Ok("Updated");
+
+            Response userResponse1 = new()
+            {
+                message = $"User updated successfully"
+            };
+
+            return Ok(userResponse1);
+            
         }
 
         [HttpPatch("active_deactive/{nic}")]
