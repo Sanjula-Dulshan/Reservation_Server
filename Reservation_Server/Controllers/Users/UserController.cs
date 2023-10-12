@@ -86,11 +86,16 @@ namespace Reservation_Server.Controllers.Users
         }
 
         [HttpPatch("active_deactive/{nic}")]
-        public ActionResult UpdateStatus(string nic)
+        public ActionResult<Response> UpdateStatus(string nic)
         {
 
-            var result = userService.UpdateStatus(nic);
-            return Ok(result);
+            string result = userService.UpdateStatus(nic);
+
+            Response userResponse = new()
+            {
+                message = result
+            };
+            return Ok(userResponse);
         }
 
         [HttpDelete("{nic}")]
@@ -122,18 +127,23 @@ namespace Reservation_Server.Controllers.Users
 
             if (isPasswordVerified == "true")
             {
-
-
-
                 return user;
             }
             else if (isPasswordVerified == "deactivated")
             {
-                return BadRequest("deactivated");
+                Response userResponse = new()
+                {
+                    message = "Your Account Deactivated. Please contact us to Reactivate"
+                };
+                return BadRequest(userResponse);
             }
             else
             {
-                return BadRequest("Incorrect Nic or password");
+                Response userResponse = new()
+                {
+                    message = "Incorrect Nic or password"
+                };
+                return BadRequest(userResponse);
 
             }
 

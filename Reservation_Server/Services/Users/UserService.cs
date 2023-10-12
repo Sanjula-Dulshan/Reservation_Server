@@ -67,7 +67,7 @@ namespace Reservation_Server.Services.Users
         // Updates the user with the specified NIC
         public void Update(string nic, User user)
         {
-            if(user.IsAgent && user.IsTraveler)
+            if(user.IsAgent && user.IsTraveler || user.IsTraveler)
             {
                 _users.ReplaceOne(user => user.Nic == nic, user);
                 return;
