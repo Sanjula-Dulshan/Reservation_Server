@@ -78,6 +78,12 @@ namespace Reservation_Server.Models.TrainModel
         [BsonElement("total_price")]
         public double TotalPrice { get; set; }
 
+        [BsonElement("date")]
+        public DateTime Date { get; set; }
+
+        [BsonElement("no_of_seats")]
+        public int NoOfSeats { get; set; }
+
     }
 
     public class TrainList

@@ -149,7 +149,9 @@ namespace Reservation_Server.Services.TrainService
             {
                 TrainList = availableTrainList,
                 TicketPrice = price,
-                TotalPrice = price * searchRequest.NoOfSeats
+                TotalPrice = price * searchRequest.NoOfSeats,
+                Date = searchRequest.Date,
+                NoOfSeats = searchRequest.NoOfSeats
             };
           
            

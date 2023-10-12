@@ -44,6 +44,18 @@ namespace Reservation_Server.Controllers.Users
             return reservation;
         }
 
+        [HttpGet("user/{userId}")]
+        public ActionResult<List<Reservation>> GetByUser(string userId)
+        {
+            var reservation = reservationService.GetByUser(userId);
+
+            if (reservation == null)
+            {
+                return NotFound("Reservation not found");
+            }
+            return reservation;
+        }
+
 
         [HttpPost]
         public ActionResult<Reservation> Post([FromBody] Reservation reservation)
