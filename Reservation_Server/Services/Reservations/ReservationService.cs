@@ -63,6 +63,14 @@ namespace Reservation_Server.Services.Reservations
             return _reservations.Find(reservation => reservation.Id == id).FirstOrDefault();
         }
 
+        // Retrieves a list of all reservations for a given user
+        public List<Reservation> GetByUser(string userId)
+        {
+
+            List<Reservation> values = _reservations.Find(reservation => reservation.UserId == userId).Sort(Builders<Reservation>.Sort.Descending(r => r.Date)).ToList();
+            return values;
+        }
+
         // Deletes the reservation with the specified ID
         public void Delete(string id)
         {

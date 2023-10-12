@@ -14,6 +14,8 @@ namespace Reservation_Server.Services.Reservations
     {
         List<Reservation> Get();
         List <Reservation> Get(string trainId, DateTime reservedDate);
+        List<Reservation> GetByUser(string userId);
+
         Reservation Get(string id);
         Reservation Create(Reservation reservation);
         string Update(string id, Reservation reservation);
