@@ -42,7 +42,7 @@ namespace Reservation_Server.Services.Reservations
         // Retrieves a list of all reservations 
         public List<Reservation> Get()
         {
-            return _reservations.Find(reservation => true).ToList();
+            return _reservations.Find(reservation => true).Sort(Builders<Reservation>.Sort.Descending(r => r.CreatedAt)).ToList();
 
         }
 
